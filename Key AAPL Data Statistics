@@ -1,0 +1,43 @@
+The AAPL stock data was collected from Yahoo Finance in the form of a CSV file on Excel from the period September 1st 2018-2013. The file was then imported into MySQL under the schema finance_data for data query analyis. 
+
+Here I present MySQL queries for key statictics of AAPL stock over the 5 year period September 1st 2018-2023.
+
+Averga_Close_Price: '114.3373'
+
+MySQL Query:
+SELECT AVG(Close) AS Average_Close_Price FROM aapl_data; 
+
+Maximum_Close_Price: '196'  Minimum_Close_Price: '36'
+
+MySQL Query: 
+SELECT MAX(Close) AS Maximum_Close_Price, MIN(Close) AS Minimum_Close_Price FROM aapl_data;
+
+Total_Trading_Volume: '136443886900'
+
+MySQL Query: 
+SELECT SUM(Volume) AS Total_Trading_Volume FROM aapl_data; 
+
+Calculate a 50-day moving average for the closing price
+
+MySQL Query: 
+SELECT Date, Close, AVG(Close) OVER (ORDER BY Date ROWS BETWEEN 49 PRECEDING AND CURRENT ROW) AS '50_Day_MA' FROM aapl_data;
+
+Result: Presents table of Date, Close and 50_Day_MA. 
+
+Calculate standard deviation for the closing price over a 50-day window
+
+MySQL Query: 
+SELECT Date, Close, STDDEV(Close) OVER (ORDER BY Date ROWS BETWEEN 49 PRECEDING AND CURRENT ROW) AS '50_Day_Volatility' FROM aapl_data;
+
+Result: Presents table of Date, Close, 50_Day_Volatility. A higher standard deviation indicates higher volatility.
+
+Calculate daily price change and returns
+
+MySQL Query: 
+SELECT Date, Close,
+       LAG(Close, 1) OVER (ORDER BY Date) AS Previous_Close,
+       Close - LAG(Close, 1) OVER (ORDER BY Date) AS Daily_Change,
+       (Close - LAG(Close, 1) OVER (ORDER BY Date)) / LAG(Close, 1) OVER (ORDER BY Date) AS Daily_Return
+FROM aapl_data;
+
+Result: Presents a table of Date, Close, Previous_Close, Daily_Change, Daily_Return. 
