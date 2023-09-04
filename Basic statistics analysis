@@ -1,0 +1,18 @@
+The AAPL stock data was collected from Yahoo Finance in the form of a CSV file on Excel from the period September 1st 2018-2013. The file was then imported into MySQL under the schema finance_data for data query analyis. 
+
+Here I present basic queries for key statictics of AAPL stock over the 5 year period September 1st 2018-2023.
+
+Averga_Close_Price: '114.3373'
+
+MySQL Query:
+SELECT AVG(Close) AS Average_Close_Price FROM aapl_data; 
+
+Maximum_Close_Price: '196'  Minimum_Close_Price: '36'
+
+MySQL Query: 
+SELECT MAX(Close) AS Maximum_Close_Price, MIN(Close) AS Minimum_Close_Price FROM aapl_data;
+
+Total_Trading_Volume: '136443886900'
+
+MySQL Query: 
+SELECT SUM(Volume) AS Total_Trading_Volume FROM aapl_data; 
